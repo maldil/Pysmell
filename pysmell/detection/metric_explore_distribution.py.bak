@@ -44,7 +44,7 @@ for subjectName in subjects:
       try:
         astContent = customast.parse_file(currentFileName)
       except:
-        print(sourcedir,currentFileName)
+        print sourcedir,currentFileName
         continue
       myast = astChecker.MyAst()
       myast.fileName = currentFileName
@@ -88,9 +88,9 @@ for subjectName in subjects:
 metric.write("\n*******************Total Prjects:%d*********************\n" %len(subjects))
 metric.write("\n*******************Total LOC:%d*********************\n" %total_lines)
 metric.write("\n*******************Total Files:%d*********************\n\n\n" %total_files)
-for smellname in list(smells.keys()):
+for smellname in smells.keys():
   metric.write("\n####################################%s####################################\n\n" %smellname)
-  for metricname in list(smells[smellname].keys()):
+  for metricname in smells[smellname].keys():
     metricdata = smells[smellname][metricname]
     outliers = pyplot.boxplot(metricdata)['fliers'][0].get_data()[1]
     metric.write("%s:  count %d, max %d, min %d, mean %s, 50th percentile %s, 60th percentile %s, 70th percentile %s, 98th percentile %s,99th percentile %s,plot-box outlier %d\n\n" \

@@ -31,6 +31,6 @@ for smell in smell_names:
     # for project in projects9_names:
     #     print '%s:%d %d %d' %(project,counts_for_projects9[project][0],counts_for_projects9[project][1],counts_for_projects9[project][2])
     # print counts100[0],counts100[1],counts100[2]
-    print(counts100[0]/106,counts100[1]/106,counts100[2]/106)
+    print counts100[0]/106,counts100[1]/106,counts100[2]/106
     # print counts100[0]/5.690635,counts100[1]/5.690635,counts100[2]/5.690635
     # print '\n'

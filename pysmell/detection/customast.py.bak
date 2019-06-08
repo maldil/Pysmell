@@ -55,7 +55,7 @@ def parse_file(filename,improved=False):
     lines = f.read()
 
     # remove BOM
-    lines = re.sub('\ufeff', ' ', lines)
+    lines = re.sub(u'\ufeff', ' ', lines)
 
     # replace the encoding decl by spaces to fool python parser
     # otherwise you get 'encoding decl in unicode string' syntax error
@@ -236,7 +236,7 @@ def find_end(node, s):
             q = "'"
             i += 1
         else:
-            print(("illegal quote:", i, s[i]))
+            print("illegal quote:", i, s[i])
             q = ''
 
         if q != '':
@@ -437,7 +437,7 @@ def add_missing_names(node, s):
             node._fields += ('op_node',)
 
     elif isinstance(node, Num):
-        if isinstance(node.n, int) or (not is_python3 and isinstance(node.n, int)):
+        if isinstance(node.n, int) or (not is_python3 and isinstance(node.n, long)):
             type = 'int'
             node.n = str(node.n)
         elif isinstance(node.n, float):
@@ -523,8 +523,8 @@ def convert_ops(ops, s, start):
         if type(op) in ops_map:
             syms.append(ops_map[type(op)])
         else:
-            print(("[WARNING] operator %s is missing from ops_map, "
-                  "please report the bug on GitHub" % op))
+            print("[WARNING] operator %s is missing from ops_map, "
+                  "please report the bug on GitHub" % op)
 
     i = start
     j = 0
@@ -631,7 +631,7 @@ def is_alpha(c):
 
 
 if __name__ == '__main__':
-    print((parse_file('./tmp/function_test.py',improved = True)))
+    print (parse_file('./tmp/function_test.py',improved = True))
 # p('/Users/yinwang/Dropbox/prog/pysonar2/tests/test-unicode/test1.py')
 # p('/Users/yinwang/Code/cpython/Lib/lib2to3/tests/data/bom.py')
 # p('/Users/yinwang/Code/cpython/Lib/test/test_decimal.py')

@@ -16,7 +16,7 @@ projects9 = ['ansible', 'boto', 'django', 'ipython', 'matplotlib', 'nltk', 'nump
 
 
 def compare_metrics_for_projects9():
-    for smell in list(smell_metrics.keys()):
+    for smell in smell_metrics.keys():
         project_2_metrics = {}
         smell_record = csv.reader(open('./metric/'+smell+'.csv'))
         universal_record = csv.reader(open('result100/'+smell+'.csv'))
@@ -30,7 +30,7 @@ def compare_metrics_for_projects9():
         for record in smell_record:
             if smell_record.line_num == 1:
                 continue
-            if record[0] not in list(project_2_metrics.keys()):
+            if record[0] not in project_2_metrics.keys():
                 project_2_metrics[record[0]] = [[int(m)] if len(m)!=0 else [] for m in record[4:]]
             else:
                 for metric_index in range(len(smell_metrics[smell])):

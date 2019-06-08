@@ -20,7 +20,7 @@ metric_file.writerow(['Project','PAR','MLOC','DOC','NBC','CLOC','NOC','LPAR','NO
 
 for subjectName in subjects:
     sourcedir = subject_dir + '\\'+ subjectName
-    print('processing', subjectName)
+    print 'processing', subjectName
     PAR,MLOC,DOC,NBC,CLOC,NOC,LPAR,NOO,TNOC,TNOL,CNOC,NOFF,CNOO,LMC,LEC,DNC,NCT = [],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[]
     smells = {'LongParameterList':{'PAR':PAR},'LongMethod':{'MLOC':MLOC},'LongScopeChaining':{'DOC':DOC},
           'LongBaseClassList':{'NBC':NBC},'LargeClass':{'CLOC':CLOC},'LongMessageChain':{'LMC':LMC},
@@ -31,7 +31,7 @@ for subjectName in subjects:
         try:
             astContent = customast.parse_file(currentFileName)
         except:
-            print(sourcedir, currentFileName)
+            print sourcedir, currentFileName
             continue
         myast = astChecker.MyAst()
         myast.fileName = currentFileName

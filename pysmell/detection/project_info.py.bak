@@ -38,7 +38,7 @@ for projectName in projects:
         try:
             astContent = customast.parse_file(currentFileName)
         except:
-            print(project_dir, currentFileName)
+            print project_dir, currentFileName
             continue
         lines = lines + count_lines(astContent)
         files = files + 1

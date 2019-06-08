@@ -1,4 +1,4 @@
-from __future__ import division 
+ 
 import csv
 
 # counts = {'django': [0,0,0,0],'numpy': [0,0,0,0],'ipython': [0,0,0,0],'boto': [0,0,0,0],'tornado': [0,0,0,0],
@@ -28,7 +28,7 @@ count_log = open('metric\\count_%s.txt' %des[index], mode='w+')
 
 
 
-for smellname in smells.keys():
+for smellname in list(smells.keys()):
 	count_log.write("################################%s################################\r\n" %smellname)
 	# for sub in counts.keys():
 	# 	counts[sub] = [0,0,0,0]

@@ -54,7 +54,7 @@ LongMessageChain.writerow(['subject','tag','file','lineno','LMC'])
 MultiplyNestedContainer = csv.writer(file('metric\\MultiplyNestedContainer.csv','wb'))
 MultiplyNestedContainer.writerow(['subject','tag','file','lineno','LEC','DNC','NCT'])
 
-for name in list(directory.keys()):
+for name in directory.keys():
     sourcedir = subject_dir+name+'\\'+name
     tag = directory[name]
     # tags = []
@@ -69,7 +69,7 @@ for name in list(directory.keys()):
       try:
         astContent = customast.parse_file(currentFileName)
       except:
-        print(name,tag,currentFileName)
+        print name,tag,currentFileName
         continue
       myast = astChecker.MyAst()
       myast.fileName = currentFileName
@@ -121,9 +121,9 @@ for name in list(directory.keys()):
 
 metric= open('metric\\metric.txt',mode='w')
 
-for smellname in list(smells.keys()):
+for smellname in smells.keys():
   metric.write("\n####################################%s####################################\n\n" %smellname)
-  for metricname in list(smells[smellname].keys()):
+  for metricname in smells[smellname].keys():
     metricdata = smells[smellname][metricname]
     outliers = pyplot.boxplot(metricdata)['fliers'][0].get_data()[1]
     metric.write("%s:  count %d, max %d, min %d, mean %s, plot-box outlier %d-%d, statistic very-high %s, 80th percentile %s\n\n" \

@@ -1,4 +1,4 @@
- 
+from __future__ import division 
 import csv
 
 counts = {'django': [0,0,0],'numpy': [0,0,0],'ipython': [0,0,0],'boto': [0,0,0],'tornado': [0,0,0],
@@ -24,9 +24,9 @@ smells = {'LongParameterList':[PAR],'LongMethod':[MLOC],'LongScopeChaining':[DOC
 
 count_log = open('metric\\count9.txt',mode='wb+')
 
-for smellname in list(smells.keys()):
+for smellname in smells.keys():
 	count_log.write("################################%s################################\r\n" %smellname)
-	for sub in list(counts.keys()):
+	for sub in counts.keys():
 		counts[sub] = [0,0,0]
 	reader = csv.reader(open('metric\\%s.csv' %smellname))
 	writer = csv.writer(file('metric\\a_%s.csv' %smellname,'wb'))
@@ -131,10 +131,10 @@ for smellname in list(smells.keys()):
 			else:
 				flag2 = 0
 			writer.writerow(line+[flag0,flag1,flag2])
-	for (subject,i) in list(counts.items()):
+	for (subject,i) in counts.items():
 		count_log.write('%s:   	experience-based %d, statistics-based %d, tuning machine %d\r\n' \
 				%(subject,i[0],i[1],i[2]))
-		if smellname in list(portion.keys()):
+		if smellname in portion.keys():
 			portion[smellname][subject] = [i[0],i[1],i[2]]
 		else:
 			portion[smellname] = {}
@@ -142,20 +142,20 @@ for smellname in list(smells.keys()):
 	count_log.write('\r\n')
 
 total = {} #subject:[total1,total2,total3]
-for smellname in list(portion.keys()):
+for smellname in portion.keys():
 	i = portion[smellname]
-	for sub in list(i.keys()):
-		if sub in list(total.keys()):
+	for sub in i.keys():
+		if sub in total.keys():
 			total[sub][0] = total[sub][0]+i[sub][0]
 			total[sub][1] = total[sub][1]+i[sub][1]
 			total[sub][2] = total[sub][2]+i[sub][2]
 		else:
 			total[sub] = i[sub][:]
 
-for smellname in list(portion.keys()):
+for smellname in portion.keys():
 	i = portion[smellname]
 	count_log.write('\r\n%s\r\n' %smellname)
-	for sub in list(i.keys()):
+	for sub in i.keys():
 		i[sub][0] = i[sub][0]/total[sub][0]
 		i[sub][1] = i[sub][1]/total[sub][1]
 		i[sub][2] = i[sub][2]/total[sub][2]

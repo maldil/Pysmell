@@ -1,4 +1,4 @@
- 
+from __future__ import division 
 import csv
 
 # counts = {'django': [0,0,0,0],'numpy': [0,0,0,0],'ipython': [0,0,0,0],'boto': [0,0,0,0],'tornado': [0,0,0,0],
@@ -23,18 +23,17 @@ smells = {'LongParameterList':[PAR],'LongMethod':[MLOC],'LongScopeChaining':[DOC
 'LongTernaryConditionalExpression':[TNOC,TNOL], 'ComplexContainerComprehension':[CNOC,NOFF,CNOO],
 'MultiplyNestedContainer':[LEC,DNC,NCT] }
 
-index1 = 4
-index2 = 5
-count_log = open('metric\\count_rest.txt',mode='wb+')
+index = 4
+count_log = open('metric\\count_%s.txt' %des[index], mode='w+')
 
 
 
-for smellname in list(smells.keys()):
+for smellname in smells.keys():
 	count_log.write("################################%s################################\r\n" %smellname)
 	# for sub in counts.keys():
 	# 	counts[sub] = [0,0,0,0]
 	reader = csv.reader(open('metric\\a_%s.csv' %smellname))	
-	writer = csv.writer(file('example repository\\the rest to check\\%s.csv' %smellname,'wb'))
+	writer = csv.writer(open('example repository\definite negative\\%s.csv' %smellname,'wb'))
 	count = 0
 	total = 0
 	for line in reader:
@@ -46,45 +45,58 @@ for smellname in list(smells.keys()):
 			m1 = smells[smellname][0]
 			m2 = smells[smellname][1]
 			m3 = smells[smellname][2]
-			if int(line[4])>m1[index1] and (int(line[5])>m2[index1] or int(line[6])>m3[index1]):
-				if int(line[4])>m1[index2] and (int(line[5])>m2[index2] or int(line[6])>m3[index2]):
-					continue
-				else:
+			if int(line[4])>m1[index] and (int(line[5])>m2[index] or int(line[6])>m3[index]):
+				if index!=3 and index!=4:
+					count = count+1
+					writer.writerow(line)
+			else:
+				if index==3 or index==4:
 					count = count+1
 					writer.writerow(line)
 		elif smellname=='ComplexContainerComprehension':
 			m1 = smells[smellname][0] #CNOC
 			m2 = smells[smellname][1] #NOFF
 			m3 = smells[smellname][2] #CNOO
-			if (int(line[4])>m1[index1] and int(line[6])>m3[index1]) or int(line[5])>m2[index1]:
-				if (int(line[4])>m1[index2] and int(line[6])>m3[index2]) or int(line[5])>m2[index2]:
-					continue
-				else:
+			if (int(line[4])>m1[index] and int(line[6])>m3[index]) or int(line[5])>m2[index]:
+				if index!=3 and index!=4:
+					count = count+1
+					writer.writerow(line)
+			else:
+				if index==3 or index==4:
 					count = count+1
 					writer.writerow(line)
 		elif smellname=='LongTernaryConditionalExpression':
 			m1 = smells[smellname][0]
 			m2 = smells[smellname][1]
-			if int(line[4])>m1[index1] or int(line[5])>m2[index1]:
-				if int(line[4])>m1[index2] or int(line[5])>m2[index2]:
-					continue
-				else:
+			if int(line[4])>m1[index] or int(line[5])>m2[index]:
+				if index!=3 and index!=4:
+					count = count+1
+					writer.writerow(line)
+			else:
+				if index==3 or index==4:
 					count = count+1
 					writer.writerow(line)
 		elif smellname=='MultiplyNestedContainer':
 			m1 = smells[smellname][0]
 			m2 = smells[smellname][1]
 			m3 = smells[smellname][2]
-			if (len(line[4])>0 and int(line[4])>m1[index1]) or (len(line[6])>0 and int(line[5])>m2[index1] and int(line[6])>m3[index1]):
-				if (len(line[4])>0 and int(line[4])>m1[index2]) or (len(line[6])>0 and int(line[5])>m2[index2] and int(line[6])>m3[index2]):
-					continue
-				else:
+			if (len(line[4])>0 and int(line[4])>m1[index]) or (len(line[6])>0 and int(line[5])>m2[index] and int(line[6])>m3[index]):
+				if index!=3 and index!=4:
+					count = count+1
+					writer.writerow(line)
+			else:
+				if index==3 or index==4:
 					count = count+1
 					writer.writerow(line)
 		else:
 			m = smells[smellname][0]
-			if int(line[4])>m[index1] and int(line[4])<=m[index2]:
-				count = count+1
-				writer.writerow(line)
+			if int(line[4])>m[index]:
+				if index!=3 and index!=4:
+					count = count+1
+					writer.writerow(line)
+			else:
+				if index==3 or index==4:
+					count = count+1
+					writer.writerow(line)
 	count_log.write("total:%d  " %total)
-	count_log.write('rest:%d\r\n' %count)
+	count_log.write('%s:%d\r\n' %(des[index],count))

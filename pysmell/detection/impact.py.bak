@@ -54,7 +54,7 @@ def changegittag(directory,tag):
   os.chdir(directory)
   p = subprocess.Popen('git checkout '+tag,shell=True,stdout=subprocess.PIPE)
 
-for (subject,versions) in list(subject_visions.items()):
+for (subject,versions) in subject_visions.items():
 	if not os.path.isdir('impact\\%s' %subject):
 		os.mkdir('impact\\%s' %subject)
 
@@ -97,7 +97,7 @@ for (subject,versions) in list(subject_visions.items()):
 			if tagtime[tag] >= currenttime or nexttagtime < currenttime:
 				continue
 			elif currenttime > tagtime[tag] and currenttime<=nexttagtime and len(line)==5:
-				if line[4] in list(change_info.keys()):
+				if line[4] in change_info.keys():
 					change_info[line[4]] = change_info[line[4]] + 1
 				else:
 					change_info[line[4]] = 1
@@ -112,7 +112,7 @@ for (subject,versions) in list(subject_visions.items()):
 			if tagtime[tag] >= currenttime or nexttagtime < currenttime:
 				continue
 			elif currenttime > tagtime[tag] and currenttime<=nexttagtime and len(line)==6:
-				if line[5] in list(fault_info.keys()):
+				if line[5] in fault_info.keys():
 					fault_info[line[5]] = fault_info[line[5]] + 1
 				else:
 					fault_info[line[5]] = 1
@@ -121,19 +121,19 @@ for (subject,versions) in list(subject_visions.items()):
 			try:
 				astContent = customast.parse_file(currentFileName)
 			except:
-				print(subject,tag,currentFileName)
+				print subject,tag,currentFileName
 				continue
 			lines = set()
 			for n in ast.walk(astContent):
 				if hasattr(n,'lineno'):
 					lines.add(n.lineno)
 
-			if currentFileName in list(change_info.keys()):
+			if currentFileName in change_info.keys():
 				change_count = change_info[currentFileName]
 			else:
 				change_count = 0
 
-			if currentFileName in list(fault_info.keys()):
+			if currentFileName in fault_info.keys():
 				fault_count = fault_info[currentFileName]
 			else:
 				fault_count = 0
